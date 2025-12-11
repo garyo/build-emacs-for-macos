@@ -1102,7 +1102,7 @@ class Build
       }
     end
 
-    if (27..31).include?(effective_version)
+    if (27..30).include?(effective_version)
       p << {
         url:
         'https://github.com/d12frosted/homebrew-emacs-plus/raw/master/' \
@@ -1110,7 +1110,7 @@ class Build
       }
     end
 
-    if (29..31).include?(effective_version)
+    if (29..30).include?(effective_version)
       p << {
         url:
         'https://github.com/d12frosted/homebrew-emacs-plus/raw/master/' \
@@ -1180,12 +1180,17 @@ class Build
           file: File.join(
             __dir__, 'patches', 'emacs-29', 'ns-alpha-background.patch'
           )
-        }
-      elsif (30..31).include?(effective_version)
+      if effective_version == 30
         p << {
           url:
           "https://github.com/emacs-mirror/emacs/compare/#{meta[:sha]}" \
           '...jonrubens:emacs:ns-alpha-background.patch'
+        }
+      elsif effective_version == 31
+        p << {
+          file: File.join(
+            __dir__, 'patches', 'emacs-31', 'ns-alpha-background.patch'
+          )
         }
       end
     end
@@ -1211,7 +1216,7 @@ class Build
     fatal "\"#{target}\" does not exist." unless File.exist?(target)
 
     if patch[:file]
-      info 'Applying patch...'
+      info "Applying patch #{patch[:file]} in #{target}..."
       FileUtils.cd(target) do
         run_cmd('patch', '-f', '-p1', '-l', '-i', patch[:file])
       end
