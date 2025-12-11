@@ -1180,7 +1180,8 @@ class Build
           file: File.join(
             __dir__, 'patches', 'emacs-29', 'ns-alpha-background.patch'
           )
-      if effective_version == 30
+        }
+      elsif effective_version == 30
         p << {
           url:
           "https://github.com/emacs-mirror/emacs/compare/#{meta[:sha]}" \
